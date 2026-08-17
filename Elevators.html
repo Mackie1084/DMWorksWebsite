@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DMW Elevator &amp; Escalator Installation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite:#14171A;
+    --graphite-2:#1D2124;
+    --steel:#3D4B57;
+    --steel-light:#6C7B85;
+    --paper:#ECE8E0;
+    --paper-dim:#DAD5C9;
+    --ink:#1B1E21;
+    --amber:#E8A23D;
+    --amber-dim:#8A6329;
+    --rail:#9AA5AC;
+    --good:#5C8A6C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--graphite);
+    color:var(--paper);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  h1,h2,h3,.display{
+    font-family:'Big Shoulders Display',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:900;
+    line-height:0.95;
+  }
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  :focus-visible{outline:3px solid var(--amber); outline-offset:3px;}
+
+  /* ===== layout shell ===== */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+
+  /* ===== nav ===== */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(20,23,26,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:16px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:26px;height:26px;flex:0 0 auto;}
+  .brand-name{font-family:'Big Shoulders Display';font-weight:900;font-size:22px;letter-spacing:0.02em;}
+  .brand-name span{color:var(--amber);}
+  nav.links{display:flex;gap:28px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;}
+  nav.links a{text-decoration:none;color:var(--rail);transition:color .2s;}
+  nav.links a:hover{color:var(--paper);}
+  .nav-cta{
+    font-size:12px;letter-spacing:0.08em;text-transform:uppercase;
+    background:var(--amber);color:var(--graphite);
+    padding:10px 16px;border-radius:2px;font-weight:600;text-decoration:none;
+    white-space:nowrap;
+  }
+  @media (max-width:820px){ nav.links{display:none;} }
+
+  /* ===== shaft rail (signature element) ===== */
+  .shaft-rail{
+    position:fixed;
+    left:0; top:0; bottom:0;
+    width:54px;
+    z-index:40;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    pointer-events:none;
+  }
+  @media (max-width:820px){ .shaft-rail{width:34px;} }
+  .rail-track{
+    position:absolute;
+    left:50%; top:0; bottom:0;
+    width:2px;
+    transform:translateX(-50%);
+    background:repeating-linear-gradient(to bottom, var(--rail) 0 6px, transparent 6px 14px);
+    opacity:0.35;
+  }
+  .rail-car{
+    position:absolute;
+    left:50%;
+    top:0;
+    width:26px;height:34px;
+    transform:translate(-50%,0);
+    transition:top .08s linear;
+  }
+  @media (max-width:820px){ .rail-car{width:18px;height:24px;} }
+
+  /* ===== hero ===== */
+  .hero{
+    padding:120px 0 90px 54px;
+    background:
+      radial-gradient(1100px 500px at 78% -10%, rgba(232,162,61,0.10), transparent 60%),
+      var(--graphite);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  @media (max-width:820px){ .hero{padding-left:34px;} }
+  .hero .wrap{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+  @media (max-width:900px){ .hero .wrap{grid-template-columns:1fr;} }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono';font-size:12px;letter-spacing:0.12em;
+    color:var(--amber);text-transform:uppercase;margin-bottom:18px;
+  }
+  .eyebrow::before{content:"";width:8px;height:8px;background:var(--amber);display:inline-block;}
+  .hero h1{font-size:clamp(42px,6vw,76px);color:var(--paper);}
+  .hero h1 em{font-style:normal;color:var(--amber);}
+  .hero p.lede{
+    margin-top:22px;max-width:46ch;color:var(--rail);font-size:17px;
+  }
+  .hero-actions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn{
+    font-size:13px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;
+    padding:14px 22px;text-decoration:none;border-radius:2px;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary{background:var(--amber);color:var(--graphite);}
+  .btn-ghost{border:1px solid var(--steel-light);color:var(--paper);}
+  .btn:hover{filter:brightness(1.08);}
+
+  .hero-diagram{background:var(--graphite-2);border:1px solid rgba(255,255,255,0.08);border-radius:4px;padding:18px;}
+  .hero-diagram figcaption{
+    margin-top:10px;font-family:'IBM Plex Mono';font-size:11px;color:var(--steel-light);
+    display:flex;justify-content:space-between;letter-spacing:0.04em;
+  }
+
+  /* ===== section headers ===== */
+  .section-head{max-width:640px;margin-bottom:44px;}
+  .section-head .k{font-family:'IBM Plex Mono';font-size:12px;letter-spacing:0.12em;color:var(--amber);text-transform:uppercase;}
+  .section-head h2{font-size:clamp(30px,4vw,46px);margin-top:8px;color:var(--paper);}
+  .section-head p{color:var(--rail);margin-top:14px;font-size:15.5px;}
+
+  section.products{padding:96px 0 96px 54px;}
+  @media (max-width:820px){ section.products{padding-left:34px;} }
+  .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);}
+  @media (max-width:920px){ .product-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .product-grid{grid-template-columns:1fr;} }
+  .product-card{background:var(--graphite-2);padding:30px 24px;min-height:230px;display:flex;flex-direction:column;}
+  .product-card .icon{width:44px;height:44px;color:var(--amber);margin-bottom:18px;}
+  .product-card h3{font-size:22px;color:var(--paper);margin-bottom:8px;}
+  .product-card p{font-size:13.5px;color:var(--rail);flex:1;}
+  .product-card .spec{margin-top:14px;font-family:'IBM Plex Mono';font-size:11px;color:var(--amber-dim);letter-spacing:0.03em;}
+
+  /* ===== process / floors ===== */
+  section.process{background:var(--paper);color:var(--ink);padding:100px 0 100px 54px;}
+  @media (max-width:820px){ section.process{padding-left:34px;} }
+  section.process .section-head .k{color:var(--amber-dim);}
+  section.process .section-head h2{color:var(--ink);}
+  section.process .section-head p{color:var(--steel);}
+  .floor{
+    display:grid;grid-template-columns:110px 1fr;gap:28px;
+    padding:32px 0;border-top:1px solid rgba(27,30,33,0.14);
+    align-items:start;
+  }
+  .floor:last-child{border-bottom:1px solid rgba(27,30,33,0.14);}
+  .floor-num{font-family:'Big Shoulders Display';font-weight:900;font-size:56px;color:var(--paper-dim);
+    -webkit-text-stroke:1.5px var(--ink);color:transparent;line-height:1;}
+  .floor.is-active .floor-num{color:var(--amber-dim);-webkit-text-stroke:0;}
+  .floor-body h3{font-size:24px;text-transform:none;font-family:'IBM Plex Sans';font-weight:600;letter-spacing:0;margin-bottom:8px;}
+  .floor-body p{color:var(--steel);font-size:15px;max-width:62ch;}
+  .floor-body .tag{
+    display:inline-block;margin-top:12px;font-family:'IBM Plex Mono';font-size:11px;
+    letter-spacing:0.05em;text-transform:uppercase;background:rgba(27,30,33,0.08);
+    padding:5px 9px;border-radius:2px;color:var(--steel);
+  }
+
+  /* ===== standards strip ===== */
+  section.standards{padding:64px 0 64px 54px;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);}
+  @media (max-width:820px){ section.standards{padding-left:34px;} }
+  .standards .wrap{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:center;}
+  .std-item{display:flex;align-items:center;gap:12px;}
+  .std-item .dot{width:8px;height:8px;background:var(--good);border-radius:50%;flex:0 0 auto;}
+  .std-item span{font-family:'IBM Plex Mono';font-size:13px;color:var(--rail);letter-spacing:0.02em;}
+
+  /* ===== stats ===== */
+  section.stats{padding:96px 0 96px 54px;}
+  @media (max-width:820px){ section.stats{padding-left:34px;} }
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
+  @media (max-width:820px){ .stats-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat b{display:block;font-family:'Big Shoulders Display';font-weight:900;font-size:56px;color:var(--amber);line-height:1;}
+  .stat span{font-family:'IBM Plex Mono';font-size:12px;color:var(--rail);letter-spacing:0.04em;text-transform:uppercase;display:block;margin-top:8px;}
+
+  /* ===== cta / footer ===== */
+  section.cta{padding:100px 0 100px 54px;background:var(--graphite-2);border-top:1px solid rgba(255,255,255,0.08);}
+  @media (max-width:820px){ section.cta{padding-left:34px;} }
+  .cta-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;}
+  .cta h2{font-size:clamp(34px,5vw,58px);max-width:14ch;color:var(--paper);}
+  footer{padding:36px 0 36px 54px;border-top:1px solid rgba(255,255,255,0.08);}
+  @media (max-width:820px){ footer{padding-left:34px;} }
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--steel-light);font-family:'IBM Plex Mono';}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="shaft-rail" aria-hidden="true">
+  <div class="rail-track"></div>
+  <svg class="rail-car" id="railCar" viewBox="0 0 26 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="1" y="1" width="24" height="32" rx="2" fill="#1D2124" stroke="#E8A23D" stroke-width="1.5"/>
+    <rect x="6" y="7" width="14" height="11" rx="1" fill="#3D4B57"/>
+    <line x1="13" y1="7" x2="13" y2="18" stroke="#9AA5AC" stroke-width="1"/>
+    <circle cx="13" cy="25" r="2" fill="#E8A23D"/>
+  </svg>
+</div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="22" height="22" stroke="#E8A23D" stroke-width="2"/>
+        <path d="M13 6 L13 20 M9 10 L13 6 L17 10 M9 16 L13 20 L17 16" stroke="#ECE8E0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="brand-name">DMW <span>/</span> INSTALL</div>
+    </div>
+    <nav class="links">
+      <a href="#products">Products</a>
+      <a href="#process">Process</a>
+  
+      
+    </nav>
+    <a class="nav-cta" href="#contact">Call +63 965 255 0278</a>
+    <a class="nav-cta" href="#email">Email desipansacala08@gmail.com</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Elevator &amp; Escalator Installation</div>
+      <h1>Vertical transport, <em>installed</em> to code, floor by floor.</h1>
+      <p class="lede">DM Works plans, installs, and commissions passenger elevators, freight elevators, home lifts, and escalators — from shaft survey through final certification.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#process">See the install process</a>
+        <a class="btn btn-ghost" href="#products">Browse products</a>
+      </div>
+    </div>
+    <figure class="hero-diagram">
+      <svg viewBox="0 0 420 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cutaway diagram of an elevator shaft showing rails, cab, counterweight, and machine room">
+        <rect x="0" y="0" width="420" height="460" fill="#14171A"/>
+        <!-- shaft outline -->
+        <rect x="60" y="20" width="220" height="400" fill="none" stroke="#3D4B57" stroke-width="2"/>
+        <!-- floor lines -->
+        <g stroke="#3D4B57" stroke-width="1" stroke-dasharray="4 4">
+          <line x1="60" y1="110" x2="280" y2="110"/>
+          <line x1="60" y1="200" x2="280" y2="200"/>
+          <line x1="60" y1="290" x2="280" y2="290"/>
+          <line x1="60" y1="380" x2="280" y2="380"/>
+        </g>
+        <!-- guide rails -->
+        <line x1="90" y1="20" x2="90" y2="420" stroke="#9AA5AC" stroke-width="3"/>
+        <line x1="250" y1="20" x2="250" y2="420" stroke="#9AA5AC" stroke-width="3"/>
+        <!-- cab -->
+        <rect x="100" y="150" width="90" height="90" rx="3" fill="#1D2124" stroke="#E8A23D" stroke-width="2"/>
+        <line x1="145" y1="150" x2="145" y2="240" stroke="#E8A23D" stroke-width="1.4"/>
+        <rect x="112" y="163" width="21" height="64" fill="#3D4B57"/>
+        <rect x="157" y="163" width="21" height="64" fill="#3D4B57"/>
+        <!-- counterweight -->
+        <rect x="220" y="60" width="26" height="70" fill="#3D4B57" stroke="#9AA5AC" stroke-width="1.4"/>
+        <!-- cables -->
+        <line x1="145" y1="150" x2="145" y2="35" stroke="#ECE8E0" stroke-width="1.2"/>
+        <line x1="233" y1="60" x2="233" y2="35" stroke="#ECE8E0" stroke-width="1.2"/>
+        <line x1="145" y1="35" x2="233" y2="35" stroke="#ECE8E0" stroke-width="1.2"/>
+        <!-- machine room -->
+        <rect x="60" y="20" width="220" height="34" fill="#1D2124" stroke="#3D4B57" stroke-width="1.4"/>
+        <circle cx="145" cy="37" r="10" fill="none" stroke="#E8A23D" stroke-width="2"/>
+        <circle cx="233" cy="37" r="6" fill="none" stroke="#E8A23D" stroke-width="2"/>
+        <!-- pit -->
+        <rect x="60" y="420" width="220" height="22" fill="#1D2124" stroke="#3D4B57" stroke-width="1.4"/>
+        <!-- labels -->
+        <g font-family="IBM Plex Mono" font-size="10" fill="#9AA5AC">
+          <text x="290" y="40">MACHINE ROOM</text>
+          <text x="290" y="200">GUIDE RAIL</text>
+          <text x="16" y="200" transform="rotate(-90 16,200)">SHAFT</text>
+          <text x="290" y="435">PIT</text>
+          <text x="196" y="98">CAB — FLR 3</text>
+        </g>
+      </svg>
+      <figcaption><span>FIG. 01 — SHAFT CROSS-SECTION</span><span>SCALE N.T.S.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="k">What we install</div>
+      <h2>Four systems, one crew.</h2>
+      <p>Each installation is engineered around the building's traffic, shaft dimensions, and code jurisdiction before a single rail goes in.</p>
+    </div>
+    <div class="product-grid reveal">
+      <div class="product-card">
+        <svg class="icon" viewBox="0 0 44 44" fill="none"><rect x="10" y="6" width="24" height="34" rx="1" stroke="currentColor" stroke-width="2"/><line x1="22" y1="6" x2="22" y2="40" stroke="currentColor" stroke-width="1.4"/><rect x="14" y="14" width="6" height="18" fill="currentColor" opacity=".5"/><rect x="24" y="14" width="6" height="18" fill="currentColor" opacity=".5"/></svg>
+        <h3>Passenger elevators</h3>
+        <p>Traction and machine-room-less (MRL) systems for offices, residential towers, and mixed-use buildings.</p>
+        <div class="spec">2–8 STOPS · 630–1600 KG</div>
+      </div>
+      <div class="product-card">
+        <svg class="icon" viewBox="0 0 44 44" fill="none"><rect x="6" y="8" width="32" height="28" rx="1" stroke="currentColor" stroke-width="2"/><line x1="6" y1="20" x2="38" y2="20" stroke="currentColor" stroke-width="1.4"/><path d="M12 28 L18 22 L24 28 L30 22 L36 28" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+        <h3>Freight &amp; goods lifts</h3>
+        <p>Heavy-duty cabs and reinforced rail systems built for warehouses, loading docks, and industrial sites.</p>
+        <div class="spec">UP TO 5000 KG · STEEL CAB</div>
+      </div>
+      <div class="product-card">
+        <svg class="icon" viewBox="0 0 44 44" fill="none"><rect x="14" y="4" width="16" height="36" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="22" cy="12" r="2.4" fill="currentColor"/><rect x="17" y="18" width="10" height="14" fill="currentColor" opacity=".4"/></svg>
+        <h3>Home &amp; low-rise lifts</h3>
+        <p>Compact, low-power platform and cab lifts for private residences and small multi-storey buildings.</p>
+        <div class="spec">2–3 STOPS · COMPACT SHAFT</div>
+      </div>
+      <div class="product-card">
+        <svg class="icon" viewBox="0 0 44 44" fill="none"><path d="M6 36 L20 36 L38 8 L38 8" stroke="currentColor" stroke-width="2" fill="none"/><line x1="10" y1="36" x2="10" y2="30" stroke="currentColor" stroke-width="1.6"/><line x1="15" y1="36" x2="15" y2="27" stroke="currentColor" stroke-width="1.6"/><line x1="20" y1="34" x2="20" y2="24" stroke="currentColor" stroke-width="1.6"/></svg>
+        <h3>Escalators &amp; walkways</h3>
+        <p>Public-traffic escalators and moving walks for malls, transit stations, and commercial lobbies.</p>
+        <div class="spec">30°/35° INCLINE · HEAVY DUTY</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="k">How installation works</div>
+      <h2>Six floors, one build.</h2>
+      <p>Every project climbs through the same six stages, from the first shaft measurement to the handover walkthrough.</p>
+    </div>
+    <div id="floorList">
+      <div class="floor reveal" data-floor="01">
+        <div class="floor-num">01</div>
+        <div class="floor-body">
+          <h3>Site survey &amp; shaft verification</h3>
+          <p>We measure shaft plumb, headroom, and pit depth against the selected system, and confirm structural loads with the building engineer.</p>
+          <span class="tag">1–3 days on site</span>
+        </div>
+      </div>
+      <div class="floor reveal" data-floor="02">
+        <div class="floor-num">02</div>
+        <div class="floor-body">
+          <h3>Shaft &amp; pit preparation</h3>
+          <p>Contractors finish the pit, ventilation, and power supply to spec before any equipment arrives, so the install crew never waits on trades.</p>
+          <span class="tag">Coordinated with GC</span>
+        </div>
+      </div>
+      <div class="floor reveal" data-floor="03">
+        <div class="floor-num">03</div>
+        <div class="floor-body">
+          <h3>Guide rails &amp; machine installation</h3>
+          <p>Guide rails are plumbed and bolted floor by floor, then the hoist machine, controller, and counterweight are set and aligned.</p>
+          <span class="tag">Structural anchoring</span>
+        </div>
+      </div>
+      <div class="floor reveal" data-floor="04">
+        <div class="floor-num">04</div>
+        <div class="floor-body">
+          <h3>Cab, doors &amp; controls</h3>
+          <p>The cab is assembled in place, landing and cab doors are hung and interlocked, and the control system is wired and configured.</p>
+          <span class="tag">Interlock testing begins</span>
+        </div>
+      </div>
+      <div class="floor reveal" data-floor="05">
+        <div class="floor-num">05</div>
+        <div class="floor-body">
+          <h3>Testing &amp; certification</h3>
+          <p>Load tests, safety-gear trips, and door-force checks are run and logged, then verified by an independent inspector against local code.</p>
+          <span class="tag">Third-party inspection</span>
+        </div>
+      </div>
+      <div class="floor reveal" data-floor="06">
+        <div class="floor-num">06</div>
+        <div class="floor-body">
+          <h3>Handover &amp; maintenance plan</h3>
+          <p>Building staff receive operating documentation and emergency procedures, and the unit is enrolled in a scheduled maintenance plan.</p>
+          <span class="tag">Warranty starts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--
+<section class="standards" id="standards">
+  <div class="wrap">
+    <div class="std-item"><div class="dot"></div><span>ASME A17.1 / CSA B44</span></div>
+    <div class="std-item"><div class="dot"></div><span>EN 81-20 / 81-50</span></div>
+    <div class="std-item"><div class="dot"></div><span>LOCAL DOLE &amp; BUILDING CODE</span></div>
+    <div class="std-item"><div class="dot"></div><span>ISO 9001 QUALITY SYSTEM</span></div>
+    <div class="std-item"><div class="dot"></div><span>THIRD-PARTY LOAD TESTING</span></div>
+  </div>
+</section>
+-->
+
+<!--
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid reveal">
+      <div class="stat"><b>6</b><span>install stages, start to certify</span></div>
+      <div class="stat"><b>4</b><span>product lines supported</span></div>
+      <div class="stat"><b>100%</b><span>installs load-tested before handover</span></div>
+      <div class="stat"><b>24/7</b><span>call-out for active contracts</span></div>
+    </div>
+  </div>
+</section>
+-->
+
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <h2>Ready to plan your shaft?</h2>
+      <!--
+          <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:install@dmworks.example">Email the install team</a>
+        <a class="btn btn-ghost" href="tel:+10000000000">Call for a site visit</a>
+      </div>
+      -->
+  
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>DMW ELEVATOR &amp; ESCALATOR SERVICES</span>
+    <!--
+      <span>ILLUSTRATIONS ORIGINAL · NO STOCK PHOTOGRAPHY USED</span>
+    -->
+  
+  </div>
+</footer>
+
+<script>
+  // Reveal-on-scroll for content blocks
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Floor highlight as each stage crosses the viewport center
+  const floors = document.querySelectorAll('.floor');
+  const floorObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('is-active', entry.isIntersecting);
+    });
+  }, { threshold: 0.5 });
+  floors.forEach(f => floorObserver.observe(f));
+
+  // Shaft rail car: position tracks scroll progress through the page
+  const railCar = document.getElementById('railCar');
+  const railTrackHeight = () => window.innerHeight - 40;
+  function updateCar(){
+    const doc = document.documentElement;
+    const scrollTop = doc.scrollTop || document.body.scrollTop;
+    const scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
+    const progress = Math.min(Math.max(scrollTop / scrollHeight, 0), 1);
+    const top = 20 + progress * (railTrackHeight() - 34);
+    railCar.style.top = top + 'px';
+  }
+  document.addEventListener('scroll', updateCar, { passive: true });
+  window.addEventListener('resize', updateCar);
+  updateCar();
+</script>
+
+</body>
+</html>

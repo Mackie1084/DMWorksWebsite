@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DM Works — Escalator Installation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --transit:#10202E;
+    --transit-2:#182C3D;
+    --steel:#B9C0C6;
+    --steel-dim:#5B6C78;
+    --concrete:#E4DFD3;
+    --concrete-dim:#D2CBB9;
+    --ink:#151A1E;
+    --safety:#F4C430;
+    --safety-deep:#A9821C;
+    --rubber:#1B1B1D;
+    --good:#4F9A6E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--transit);
+    color:var(--concrete);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  .mono{font-family:'Space Mono',monospace;}
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:400;
+    line-height:0.92;
+  }
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  :focus-visible{outline:3px solid var(--safety); outline-offset:3px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+
+  /* ===== nav ===== */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(16,32,46,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .nav-inner{max-width:1180px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:28px;height:28px;flex:0 0 auto;}
+  .brand-name{font-family:'Anton';font-size:20px;letter-spacing:0.02em;}
+  .brand-name span{color:var(--safety);}
+  nav.links{display:flex;gap:28px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;}
+  nav.links a{text-decoration:none;color:var(--steel);transition:color .2s;}
+  nav.links a:hover{color:var(--concrete);}
+  .nav-cta{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;background:var(--safety);color:var(--ink);padding:10px 16px;border-radius:2px;font-weight:700;text-decoration:none;white-space:nowrap;}
+  @media (max-width:820px){ nav.links{display:none;} }
+
+  /* ===== hero with step-loop signature ===== */
+  .hero{padding:100px 0 0;background:radial-gradient(1100px 480px at 80% -10%, rgba(244,196,48,0.10), transparent 60%), var(--transit);}
+  .hero .wrap{display:grid;grid-template-columns:1fr;gap:40px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono';font-size:12px;letter-spacing:0.12em;color:var(--safety);text-transform:uppercase;margin-bottom:18px;}
+  .eyebrow::before{content:"";width:8px;height:8px;background:var(--safety);display:inline-block;}
+  .hero h1{font-size:clamp(38px,6.4vw,84px);color:var(--concrete);max-width:16ch;}
+  .hero h1 em{font-style:normal;color:var(--safety);}
+  .hero p.lede{margin-top:22px;max-width:52ch;color:var(--steel);font-size:17px;}
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn{font-size:13px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;padding:14px 22px;text-decoration:none;border-radius:2px;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary{background:var(--safety);color:var(--ink);}
+  .btn-ghost{border:1px solid var(--steel-dim);color:var(--concrete);}
+  .btn:hover{filter:brightness(1.08);}
+
+  /* the escalator loop strip */
+  .loop-stage{
+    position:relative;
+    width:100%;
+    height:210px;
+    margin-top:56px;
+    background:var(--transit-2);
+    border-top:1px solid rgba(255,255,255,0.08);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    overflow:hidden;
+  }
+  .loop-rail{
+    position:absolute; left:0; right:0; top:38px;
+    height:2px;background:var(--steel-dim);
+  }
+  .loop-rail.bottom{top:auto;bottom:38px;}
+  .step-track{
+    position:absolute; inset:0;
+    display:flex; align-items:flex-end;
+    animation:stepScroll 6s linear infinite;
+  }
+  @keyframes stepScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-160px);}
+  }
+  .step{
+    flex:0 0 auto;
+    width:40px;height:40px;
+    margin-right:0;
+    background:linear-gradient(180deg, var(--steel) 0%, var(--steel-dim) 100%);
+    border-top:3px solid var(--safety);
+    position:relative;
+    transform-origin:bottom left;
+  }
+  .step::after{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:3px;
+    background:repeating-linear-gradient(90deg, var(--rubber) 0 4px, transparent 4px 8px);
+  }
+  .loop-caption{position:absolute;bottom:10px;right:20px;font-family:'Space Mono';font-size:11px;color:var(--steel-dim);letter-spacing:0.05em;}
+  .loop-caption-l{position:absolute;top:10px;left:20px;font-family:'Space Mono';font-size:11px;color:var(--steel-dim);letter-spacing:0.05em;}
+
+  /* ===== section headers ===== */
+  .section-head{max-width:640px;margin-bottom:44px;}
+  .section-head .k{font-family:'Space Mono';font-size:12px;letter-spacing:0.12em;color:var(--safety);text-transform:uppercase;}
+  .section-head h2{font-size:clamp(30px,4vw,48px);margin-top:8px;color:var(--concrete);}
+  .section-head p{color:var(--steel);margin-top:14px;font-size:15.5px;}
+
+  /* ===== products ===== */
+  section.products{padding:96px 0;}
+  .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);}
+  @media (max-width:920px){ .product-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .product-grid{grid-template-columns:1fr;} }
+  .product-card{background:var(--transit-2);padding:30px 24px;min-height:230px;display:flex;flex-direction:column;}
+  .product-card .icon{width:44px;height:44px;color:var(--safety);margin-bottom:18px;}
+  .product-card h3{font-size:20px;color:var(--concrete);margin-bottom:8px;font-family:'Work Sans';font-weight:700;text-transform:none;letter-spacing:0;}
+  .product-card p{font-size:13.5px;color:var(--steel);flex:1;}
+  .product-card .spec{margin-top:14px;font-family:'Space Mono';font-size:11px;color:var(--safety-deep);letter-spacing:0.03em;}
+
+  /* ===== incline process ===== */
+  section.process{background:var(--concrete);color:var(--ink);padding:100px 0;}
+  section.process .section-head .k{color:var(--safety-deep);}
+  section.process .section-head h2{color:var(--ink);}
+  section.process .section-head p{color:var(--steel-dim);}
+  .incline{position:relative;padding-left:6px;}
+  .incline-line{
+    position:absolute;left:0;top:0;bottom:0;width:2px;
+    background:repeating-linear-gradient(to bottom, var(--ink) 0 6px, transparent 6px 14px);
+    opacity:0.25;
+  }
+  .stage{
+    position:relative;
+    display:grid;grid-template-columns:70px 1fr;gap:24px;
+    padding:28px 0 28px 24px;
+    border-top:1px solid rgba(21,26,30,0.12);
+  }
+  .stage:last-child{border-bottom:1px solid rgba(21,26,30,0.12);}
+  .stage::before{
+    content:"";position:absolute;left:-5px;top:34px;width:12px;height:12px;
+    background:var(--concrete);border:2px solid var(--ink);border-radius:50%;
+  }
+  .stage.is-active::before{background:var(--safety);border-color:var(--safety-deep);}
+  .stage-num{font-family:'Space Mono';font-size:13px;color:var(--steel-dim);padding-top:4px;}
+  .stage-body h3{font-size:22px;font-family:'Work Sans';font-weight:700;text-transform:none;letter-spacing:0;margin-bottom:8px;}
+  .stage-body p{color:var(--steel-dim);font-size:15px;max-width:62ch;}
+  .stage-body .tag{display:inline-block;margin-top:12px;font-family:'Space Mono';font-size:11px;letter-spacing:0.05em;text-transform:uppercase;background:rgba(21,26,30,0.08);padding:5px 9px;border-radius:2px;color:var(--steel-dim);}
+
+  /* ===== standards ===== */
+  section.standards{padding:64px 0;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);}
+  .standards .wrap{display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between;align-items:center;}
+  .std-item{display:flex;align-items:center;gap:12px;}
+  .std-item .dot{width:8px;height:8px;background:var(--good);border-radius:50%;flex:0 0 auto;}
+  .std-item span{font-family:'Space Mono';font-size:13px;color:var(--steel);letter-spacing:0.02em;}
+
+  /* ===== stats ===== */
+  section.stats{padding:96px 0;}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
+  @media (max-width:820px){ .stats-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat b{display:block;font-family:'Anton';font-size:52px;color:var(--safety);line-height:1;}
+  .stat span{font-family:'Space Mono';font-size:12px;color:var(--steel);letter-spacing:0.04em;text-transform:uppercase;display:block;margin-top:8px;}
+
+  /* ===== cta / footer ===== */
+  section.cta{padding:100px 0;background:var(--transit-2);border-top:1px solid rgba(255,255,255,0.08);}
+  .cta-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;}
+  .cta h2{font-size:clamp(32px,5vw,54px);max-width:16ch;color:var(--concrete);}
+  footer{padding:36px 0;border-top:1px solid rgba(255,255,255,0.08);}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--steel-dim);font-family:'Space Mono';}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 22 L12 22 L24 6" stroke="#F4C430" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        <circle cx="6" cy="22" r="1.6" fill="#E4DFD3"/>
+        <circle cx="10" cy="22" r="1.6" fill="#E4DFD3"/>
+        <circle cx="24" cy="6" r="1.6" fill="#E4DFD3"/>
+      </svg>
+      <div class="brand-name">DMW <span>/</span> ESCALATE</div>
+    </div>
+    <nav class="links">
+      <a href="#products">Products</a>
+      <a href="#process">Process</a>
+     
+    </nav>
+        <a class="nav-cta" href="#contact">Call +63 965 255 0278</a>
+        <a class="nav-cta" href="#email">Email desipansacala08@gmail.com</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Escalator Installation</div>
+      <h1>A continuous loop, <em>installed</em> to carry your traffic.</h1>
+      <p class="lede">DMW installs, and commissions escalators and moving walks — trussed, aligned, and speed-calibrated for the foot traffic your building actually sees.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#process">See the install process</a>
+        <a class="btn btn-ghost" href="#products">Browse products</a>
+      </div>
+    </div>
+  </div>
+  <div class="loop-stage" aria-hidden="true">
+    <div class="loop-rail"></div>
+    <div class="loop-rail bottom"></div>
+    <div class="loop-caption-l">FIG. 01 — STEP CHAIN, CONTINUOUS LOOP</div>
+    <div class="step-track" id="stepTrack"></div>
+    <div class="loop-caption">30°–35° INCLINE · SCALE N.T.S.</div>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="k">What we install</div>
+      <h2>Four systems, one crew.</h2>
+      <p>Every escalator or walkway is engineered around rise height, traffic volume, and the space's own structural openings before the truss ever arrives on site.</p>
+    </div>
+    <div class="product-grid reveal">
+      <div class="product-card">
+        <svg class="icon" viewBox="0 0 44 44" fill="none"><path d="M6 36 L16 36 L34 8" stroke="currentColor" stroke-width="2" fill="none"/><rect x="8" y="30" width="6" height="6" fill="currentColor" opacity=".5"/><rect x="16" y="24" width="6" height="6" fill="currentColor" opacity=".5"/><rect x="24" y="18" width="6" height="6" fill="currentColor" opacity=".5"/></svg>
+        <h3>Commercial escalators</h3>
+        <p>Standard-duty units for retail, offices, and mixed-use lobbies with moderate, predictable traffic.</p>
+        <div class="spec">30° INCLINE · 0.5 M/S</div>
+      </div>
+      <div class="product-card">
+        <svg class="icon" viewBox="0 0 44 44" fill="none"><path d="M6 36 L16 36 L34 8" stroke="currentColor" stroke-width="2.6" fill="none"/><circle cx="10" cy="33" r="2.4" fill="currentColor"/><circle cx="19" cy="24" r="2.4" fill="currentColor"/><circle cx="28" cy="15" r="2.4" fill="currentColor"/></svg>
+        <h3>Heavy-duty / transit</h3>
+        <p>Reinforced step chains and continuous-duty motors built for airports, stations, and 24-hour operation.</p>
+        <div class="spec">CONTINUOUS DUTY · IP-RATED</div>
+      </div>
+      <div class="product-card">
+        <svg class="icon" viewBox="0 0 44 44" fill="none"><rect x="4" y="20" width="36" height="6" rx="1" stroke="currentColor" stroke-width="2"/><line x1="4" y1="14" x2="40" y2="14" stroke="currentColor" stroke-width="1.6"/><line x1="10" y1="14" x2="10" y2="20" stroke="currentColor" stroke-width="1.2"/><line x1="22" y1="14" x2="22" y2="20" stroke="currentColor" stroke-width="1.2"/><line x1="34" y1="14" x2="34" y2="20" stroke="currentColor" stroke-width="1.2"/></svg>
+        <h3>Moving walkways</h3>
+        <p>Flat and inclined travelators for long concourses — terminals, exhibition halls, and large-format retail.</p>
+        <div class="spec">0°–12° INCLINE · WIDE PALLET</div>
+      </div>
+      <div class="product-card">
+        <svg class="icon" viewBox="0 0 44 44" fill="none"><path d="M6 30 L16 30 L30 12" stroke="currentColor" stroke-width="2" fill="none"/><path d="M30 12 C34 12 36 16 34 20" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="34" cy="22" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+        <h3>Outdoor escalators</h3>
+        <p>Weatherproofed steps, heated combs, and sealed drive units for exposed transit and stadium sites.</p>
+        <div class="spec">IP55 · HEATED COMB PLATE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="k">How installation works</div>
+      <h2>Five stages, one incline.</h2>
+      <p>Escalators go in along a single rising line — each stage builds directly on the last, from truss placement to the final ride-quality check.</p>
+    </div>
+    <div class="incline">
+      <div class="incline-line"></div>
+      <div class="stage reveal" data-stage="01">
+        <div class="stage-num mono">01</div>
+        <div class="stage-body">
+          <h3>Truss placement &amp; structural tie-in</h3>
+          <p>The steel truss is craned or winched into the floor opening and bolted to the building structure at the top and bottom landings.</p>
+          <span class="tag">Rigging &amp; crane day</span>
+        </div>
+      </div>
+      <div class="stage reveal" data-stage="02">
+        <div class="stage-num mono">02</div>
+        <div class="stage-body">
+          <h3>Drive, steps &amp; handrail assembly</h3>
+          <p>The drive unit, step chain, and steps are fitted inside the truss, and the handrail band is threaded and tensioned along its full loop.</p>
+          <span class="tag">Mechanical fit-out</span>
+        </div>
+      </div>
+      <div class="stage reveal" data-stage="03">
+        <div class="stage-num mono">03</div>
+        <div class="stage-body">
+          <h3>Alignment &amp; speed calibration</h3>
+          <p>Step-to-comb clearance, handrail speed, and step level are all tuned so the ride matches spec at both landings.</p>
+          <span class="tag">Precision tuning</span>
+        </div>
+      </div>
+      <div class="stage reveal" data-stage="04">
+        <div class="stage-num mono">04</div>
+        <div class="stage-body">
+          <h3>Safety devices &amp; skirt brushes</h3>
+          <p>Step demarcation lighting, skirt-obstruction switches, comb-plate sensors, and emergency stops are wired and function-tested.</p>
+          <span class="tag">Interlock testing</span>
+        </div>
+      </div>
+      <div class="stage reveal" data-stage="05">
+        <div class="stage-num mono">05</div>
+        <div class="stage-body">
+          <h3>Load testing &amp; certification</h3>
+          <p>The unit runs under rated load while an independent inspector verifies braking distance, speed, and safety-device response against code.</p>
+          <span class="tag">Third-party inspection</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--
+<section class="standards" id="standards">
+  <div class="wrap">
+    <div class="std-item"><div class="dot"></div><span>ASME A17.1 / CSA B44</span></div>
+    <div class="std-item"><div class="dot"></div><span>EN 115-1</span></div>
+    <div class="std-item"><div class="dot"></div><span>LOCAL DOLE &amp; BUILDING CODE</span></div>
+    <div class="std-item"><div class="dot"></div><span>ISO 9001 QUALITY SYSTEM</span></div>
+    <div class="std-item"><div class="dot"></div><span>RATED-LOAD TESTING</span></div>
+  </div>
+</section>
+-->
+
+
+<!--
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid reveal">
+      <div class="stat"><b>5</b><span>install stages, truss to certify</span></div>
+      <div class="stat"><b>4</b><span>product lines supported</span></div>
+      <div class="stat"><b>100%</b><span>units load-tested before handover</span></div>
+      <div class="stat"><b>24/7</b><span>call-out for transit contracts</span></div>
+    </div>
+  </div>
+</section>
+-->
+
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <h2>Ready to plan your rise?</h2>
+      <!--
+        <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:install@dmworks.example">Email the install team</a>
+        <a class="btn btn-ghost" href="tel:+10000000000">Call for a site visit</a>
+      </div>
+      -->
+    
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>DMW ELEVATOR &amp; ESCALATOR SERVICES</span>
+  
+  </div>
+</footer>
+
+<script>
+  // Build the repeating step-chain loop
+  const track = document.getElementById('stepTrack');
+  const stepCount = 40;
+  for (let i = 0; i < stepCount; i++){
+    const step = document.createElement('div');
+    step.className = 'step';
+    step.style.transform = `translateY(${(i % 12) * -3}px)`;
+    track.appendChild(step);
+  }
+
+  // Reveal-on-scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Highlight active stage on the incline as it crosses view
+  const stages = document.querySelectorAll('.stage');
+  const stageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('is-active', entry.isIntersecting);
+    });
+  }, { threshold: 0.5 });
+  stages.forEach(s => stageObserver.observe(s));
+</script>
+
+</body>
+</html>
